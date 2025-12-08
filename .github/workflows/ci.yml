@@ -1,0 +1,95 @@
+name: CI - Security & Quality Checks
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Security Audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Check for vulnerabilities
+        run: |
+          echo "Running dependency vulnerability check..."
+          npm audit --json > audit-report.json || true
+          cat audit-report.json
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-report
+          path: audit-report.json
+          retention-days: 30
+
+  lint-and-type-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit || true
+
+      - name: Lint
+        run: npm run lint || true
+
+  build-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          OFFICIAL_RATES_JSON_URL: /official-rates.json
+          PARALLEL_RATES_JSON_URL: /parallel-rates.json
+          AI_PROVIDER: groq
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          NEXT_PUBLIC_ADSENSE_ID: ca-pub-9561015604678968
+
+      - name: Check build size
+        run: |
+          echo "Build completed successfully"
+          du -sh .next/ || true

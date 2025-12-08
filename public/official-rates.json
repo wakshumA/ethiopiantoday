@@ -1,0 +1,26 @@
+{
+  "USD": {
+    "buying": 151.31,
+    "selling": 151.31
+  },
+  "EUR": {
+    "buying": 158.7543,
+    "selling": 158.7543
+  },
+  "GBP": {
+    "buying": 191.4258,
+    "selling": 191.4258
+  },
+  "AED": {
+    "buying": 41.20,
+    "selling": 41.20
+  },
+  "SAR": {
+    "buying": 40.35,
+    "selling": 40.35
+  },
+  "KWD": {
+    "buying": 493.50,
+    "selling": 493.50
+  }
+}

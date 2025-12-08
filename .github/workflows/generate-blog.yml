@@ -1,0 +1,44 @@
+name: Generate Daily Blog Post
+
+on:
+  schedule:
+    # Runs every day at 6:00 AM UTC (9:00 AM Ethiopian Time)
+    - cron: '0 6 * * *'
+  
+  # Allows manual triggering from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  generate-blog:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Generate Blog Post
+        run: |
+          response=$(curl -s -w "\n%{http_code}" -X POST ${{ secrets.APP_URL }}/api/blog/auto-generate \
+            -H "Authorization: Bearer ${{ secrets.BLOG_GENERATION_SECRET }}" \
+            -H "Content-Type: application/json")
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n-1)
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          
+          if [ "$http_code" -ne 200 ]; then
+            echo "Blog generation failed with status $http_code"
+            exit 1
+          fi
+          
+          echo "Blog post generated successfully!"
+
+      - name: Notify on Success
+        if: success()
+        run: |
+          echo "✅ Daily blog post generated at $(date)"
+
+      - name: Notify on Failure
+        if: failure()
+        run: |
+          echo "❌ Blog generation failed at $(date)"
+          # You can add Slack/Discord/email notification here
