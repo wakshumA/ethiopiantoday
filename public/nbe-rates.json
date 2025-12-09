@@ -1,38 +1,26 @@
-[
-  {
-    "code": "USD",
-    "buying": 154.8124,
-    "selling": 156.3605,
-    "rate": 154.8124
+{
+  "USD": {
+    "buying": 154.81,
+    "selling": 156.36
   },
-  {
-    "code": "EUR",
-    "buying": 180.2945,
-    "selling": 182.0975,
-    "rate": 181.196
+  "EUR": {
+    "buying": 180.29,
+    "selling": 182.1
   },
-  {
-    "code": "GBP",
-    "buying": 206.4578,
-    "selling": 208.5224,
-    "rate": 207.4901
+  "GBP": {
+    "buying": 206.46,
+    "selling": 208.52
   },
-  {
-    "code": "AED",
-    "buying": 42.1476,
-    "selling": 42.5691,
-    "rate": 42.3584
+  "AED": {
+    "buying": 42.15,
+    "selling": 42.57
   },
-  {
-    "code": "SAR",
-    "buying": 41.2503,
-    "selling": 41.6628,
-    "rate": 41.4566
+  "SAR": {
+    "buying": 41.25,
+    "selling": 41.66
   },
-  {
-    "code": "KWD",
-    "buying": 504.1001,
-    "selling": 509.1411,
-    "rate": 506.6206
+  "KWD": {
+    "buying": 504.1,
+    "selling": 509.14
   }
-]
+}

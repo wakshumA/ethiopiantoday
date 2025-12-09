@@ -1,26 +1,26 @@
 {
   "USD": {
-    "buying": 151.6086,
-    "selling": 154.6408
+    "buying": 151.6,
+    "selling": 154.64
   },
   "EUR": {
-    "buying": 176.5027,
-    "selling": 180.0328
+    "buying": 176.5,
+    "selling": 180.03
   },
   "GBP": {
-    "buying": 198.3835,
-    "selling": 202.3512
+    "buying": 198.38,
+    "selling": 202.35
   },
   "AED": {
-    "buying": 41.2821,
-    "selling": 41.1078
+    "buying": 41.28,
+    "selling": 41.11
   },
   "SAR": {
-    "buying": 40.402,
-    "selling": 41.2101
+    "buying": 40.4,
+    "selling": 41.21
   },
   "KWD": {
-    "buying": 484.6014,
-    "selling": 494.2935
+    "buying": 484.6,
+    "selling": 494.29
   }
 }
