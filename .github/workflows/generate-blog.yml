@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Generate Blog Post
         run: |
-          response=$(curl -s -w "\n%{http_code}" -X POST ${{ secrets.APP_URL }}/api/blog/auto-generate \
+          response=$(curl -s -w "\n%{http_code}" -X POST https://thioexchangerate-d6frf6emebdpb7bw.canadacentral-01.azurewebsites.net/api/blog/auto-generate \
             -H "Authorization: Bearer ${{ secrets.BLOG_GENERATION_SECRET }}" \
             -H "Content-Type: application/json")
           
