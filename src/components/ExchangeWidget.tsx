@@ -23,7 +23,6 @@ export default function ExchangeWidget() {
       {/* Header */}
       <div className="px-6 py-4 bg-gradient-to-br from-blue-500 to-blue-600 text-white dark:from-blue-600 dark:to-blue-700 transition-all duration-300">
         <h3 className="text-lg sm:text-xl font-semibold tracking-tight flex items-center gap-2">
-          <span aria-hidden>💱</span>
           <span>Exchange Rates (ETB)</span>
         </h3>
       </div>
