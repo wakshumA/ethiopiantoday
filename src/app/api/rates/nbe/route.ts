@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import fs from 'fs'
+import path from 'path'
 
 export async function GET() {
   try {
@@ -52,9 +54,25 @@ export async function GET() {
     return res
   } catch (error) {
     console.error('[NBE API Error]:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch NBE rates', rates: [] },
-      { status: 500 }
-    )
+    
+    // Fallback to JSON file
+    try {
+      const jsonPath = path.join(process.cwd(), 'public', 'nbe-rates.json')
+      const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'))
+      
+      const res = NextResponse.json({ 
+        rates: jsonData,
+        source: 'nbe-fallback',
+        date: new Date().toISOString().split('T')[0]
+      })
+      res.headers.set('Cache-Control', 'public, s-maxage=1800, max-age=900')
+      return res
+    } catch (fallbackError) {
+      console.error('[NBE Fallback Error]:', fallbackError)
+      return NextResponse.json(
+        { error: 'Failed to fetch NBE rates', rates: [] },
+        { status: 500 }
+      )
+    }
   }
 }

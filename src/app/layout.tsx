@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Background />
           <Navbar />
-          <main className="container max-w-7xl px-4 sm:px-6 py-6 min-h-screen">
+          <main className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-6 min-h-screen max-w-[1920px] mx-auto">
             {children}
           </main>
           <Footer />

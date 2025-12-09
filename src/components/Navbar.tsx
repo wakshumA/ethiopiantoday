@@ -8,9 +8,9 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b bg-gradient-to-r from-[#FFFEF9] via-[#FFF9E6] to-[#FFFEF9] dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95 border-[#F2C94C]/20 dark:border-gray-800">
-      <div className="container max-w-7xl flex items-center justify-between py-4 gap-4">
-        <Link className="text-2xl font-bold bg-gradient-to-r from-[#B8860B] to-[#D4AF37] bg-clip-text text-transparent dark:from-[#FFD700] dark:to-[#FDB931]" href="/">
-          Ethiopian Today
+      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex items-center justify-between py-4 gap-4">
+        <Link className="text-2xl font-bold text-black dark:text-white" href="/">
+          Ethiopian Exchange Rate Today
         </Link>
         
         {/* Desktop Navigation */}

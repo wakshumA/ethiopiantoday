@@ -93,9 +93,6 @@ export default function HeroSection() {
       
       <div className="relative z-10">
         <div className="flex items-center gap-1.5 mb-2">
-          <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-md flex items-center justify-center text-sm shadow">
-            💱
-          </div>
           <h1 className="text-base md:text-lg font-bold text-white drop-shadow">
             Ethiopian Birr Exchange Rates (Official)
           </h1>
