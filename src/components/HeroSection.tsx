@@ -102,34 +102,26 @@ export default function HeroSection() {
         </p>
         
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <div className="group bg-white/10 backdrop-blur-md rounded-md p-2 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-            <div className="text-white/80 text-xs mb-0.5 font-medium">USD</div>
-            <div className="text-white text-sm font-bold">{rates.usd.rate}</div>
-            <div className={`text-xs flex items-center gap-0.5 font-semibold ${rates.usd.isPositive ? 'text-green-300' : 'text-red-300'}`}>
+        <div className="grid grid-cols-3 gap-3">
+          <div className="group bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+            <div className="text-white/80 text-sm mb-1 font-medium">USD</div>
+            <div className="text-white text-lg font-bold">{rates.usd.rate}</div>
+            <div className={`text-sm flex items-center gap-1 font-semibold ${rates.usd.isPositive ? 'text-green-300' : 'text-red-300'}`}>
               <span>{rates.usd.isPositive ? '↑' : '↓'}</span> {rates.usd.change}%
             </div>
           </div>
-          <div className="group bg-white/10 backdrop-blur-md rounded-md p-2 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-            <div className="text-white/80 text-xs mb-0.5 font-medium">EUR</div>
-            <div className="text-white text-sm font-bold">{rates.eur.rate}</div>
-            <div className={`text-xs flex items-center gap-0.5 font-semibold ${rates.eur.isPositive ? 'text-green-300' : 'text-red-300'}`}>
+          <div className="group bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+            <div className="text-white/80 text-sm mb-1 font-medium">EUR</div>
+            <div className="text-white text-lg font-bold">{rates.eur.rate}</div>
+            <div className={`text-sm flex items-center gap-1 font-semibold ${rates.eur.isPositive ? 'text-green-300' : 'text-red-300'}`}>
               <span>{rates.eur.isPositive ? '↑' : '↓'}</span> {rates.eur.change}%
             </div>
           </div>
-          <div className="group bg-white/10 backdrop-blur-md rounded-md p-2 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-            <div className="text-white/80 text-xs mb-0.5 font-medium">GBP</div>
-            <div className="text-white text-sm font-bold">{rates.gbp.rate}</div>
-            <div className={`text-xs flex items-center gap-0.5 font-semibold ${rates.gbp.isPositive ? 'text-green-300' : 'text-red-300'}`}>
+          <div className="group bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
+            <div className="text-white/80 text-sm mb-1 font-medium">GBP</div>
+            <div className="text-white text-lg font-bold">{rates.gbp.rate}</div>
+            <div className={`text-sm flex items-center gap-1 font-semibold ${rates.gbp.isPositive ? 'text-green-300' : 'text-red-300'}`}>
               <span>{rates.gbp.isPositive ? '↑' : '↓'}</span> {rates.gbp.change}%
-            </div>
-          </div>
-          <div className="group bg-white/10 backdrop-blur-md rounded-md p-2 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-            <div className="text-white/80 text-xs mb-0.5 font-medium">Updated</div>
-            <div className="text-white text-xs font-bold">{lastUpdate}</div>
-            <div className="text-blue-200 text-xs flex items-center gap-0.5">
-              <span className="w-1 h-1 bg-green-400 rounded-full animate-pulse"></span>
-              {loading ? 'Loading' : 'Live'}
             </div>
           </div>
         </div>

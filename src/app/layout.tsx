@@ -12,6 +12,14 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Ethiopian Today - Exchange Rates & Economic News',
   description: 'Get the latest Ethiopian Birr exchange rates, currency conversion, and economic news. Real-time updates on USD, EUR, GBP and more.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', sizes: 'any' }
+    ],
+    apple: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
   viewport: {
     width: 'device-width',
     initialScale: 1,
