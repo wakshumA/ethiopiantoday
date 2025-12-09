@@ -10,9 +10,9 @@ interface RateData {
 
 export default function HeroSection() {
   const [rates, setRates] = useState({
-    usd: { rate: '155.43', change: '0.5', isPositive: true },
-    eur: { rate: '180.44', change: '0.3', isPositive: true },
-    gbp: { rate: '205.09', change: '0.2', isPositive: false },
+    usd: { rate: '151.61', change: '0.5', isPositive: true },
+    eur: { rate: '176.50', change: '0.3', isPositive: true },
+    gbp: { rate: '198.38', change: '0.2', isPositive: false },
   })
   const [loading, setLoading] = useState(true)
   const [lastUpdate, setLastUpdate] = useState('Just now')
@@ -20,29 +20,29 @@ export default function HeroSection() {
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        // Fetch from CBE (Commercial Bank of Ethiopia) API
-        const response = await fetch('/api/rates/cbe')
+        // Fetch from official rates (same source as Currency Converter and CBE Cash Rates)
+        const response = await fetch('/api/rates/official')
         const data = await response.json()
         
         if (data.rates && data.rates.length > 0) {
-          // Find USD, EUR, GBP rates from CBE data
+          // Find USD, EUR, GBP rates - use buying price for hero section
           const usdRate = data.rates.find((r: any) => r.code === 'USD')
           const eurRate = data.rates.find((r: any) => r.code === 'EUR')
           const gbpRate = data.rates.find((r: any) => r.code === 'GBP')
           
           setRates({
             usd: { 
-              rate: usdRate?.rate?.toFixed(2) || '151.31',
+              rate: usdRate?.buying?.toFixed(2) || '151.61',
               change: '0.5',
               isPositive: true
             },
             eur: { 
-              rate: eurRate?.rate?.toFixed(2) || '175.50',
+              rate: eurRate?.buying?.toFixed(2) || '176.50',
               change: '0.3',
               isPositive: true
             },
             gbp: { 
-              rate: gbpRate?.rate?.toFixed(2) || '200.25',
+              rate: gbpRate?.buying?.toFixed(2) || '198.38',
               change: '0.2',
               isPositive: false
             },
