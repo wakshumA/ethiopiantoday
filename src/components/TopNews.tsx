@@ -76,15 +76,15 @@ export default function TopNews() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="animate-pulse border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-900">
-            <div className="h-48 bg-gray-200 dark:bg-gray-700"></div>
-            <div className="p-6 space-y-4">
-              <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mt-4"></div>
+          <div key={i} className="stagger-item animate-pulse border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-900">
+            <div className="h-40 sm:h-48 bg-gray-200 dark:bg-gray-700 skeleton-loading"></div>
+            <div className="p-4 sm:p-6 space-y-4">
+              <div className="h-5 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-3/4"></div>
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-full"></div>
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-5/6"></div>
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-1/4 mt-4"></div>
             </div>
           </div>
         ))}
@@ -120,19 +120,19 @@ export default function TopNews() {
   }
 
   return (
-    <div className="space-y-6 p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ring-1 ring-slate-200/60 dark:ring-slate-700/60">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="space-y-6 p-4 sm:p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ring-1 ring-slate-200/60 dark:ring-slate-700/60">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {news.map((item, index) => (
           <a
             key={index}
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-500 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] hover:-translate-y-1 bg-white dark:bg-slate-800 animate-fade-in-up"
+            className="stagger-item group bg-white dark:bg-slate-700 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-600 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
             {item.thumbnail && (
-              <div className="relative w-full h-48 bg-gray-200 dark:bg-gray-800 overflow-hidden">
+              <div className="relative w-full h-40 sm:h-48 bg-gray-200 dark:bg-gray-800 overflow-hidden">
                 <img 
                   src={item.thumbnail} 
                   alt={item.title}
@@ -147,19 +147,19 @@ export default function TopNews() {
                 </div>
               </div>
             )}
-            <div className="p-6 space-y-3">
-              <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+            <div className="p-4 sm:p-6 space-y-3">
+              <h3 className="font-semibold text-base sm:text-lg text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                 {item.title}
               </h3>
               
               {item.description && (
-                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
                   {truncateText(item.description, 120)}
                 </p>
               )}
               
               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-800">
-                {!item.thumbnail && <span className="font-medium">{item.source}</span>}
+                {!item.thumbnail && <span className="font-medium text-xs">{item.source}</span>}
                 <span className="flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

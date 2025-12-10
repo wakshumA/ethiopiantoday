@@ -73,43 +73,47 @@ export default function ExchangeRateChart() {
     return (
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 p-6">
         <div className="animate-pulse">
-          <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-4"></div>
-          <div className="h-64 bg-slate-200 dark:bg-slate-700 rounded"></div>
+          <div className="h-6 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-1/3 mb-4"></div>
+          <div className="h-64 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded mb-4"></div>
+          <div className="flex gap-3">
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-24"></div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-24"></div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 skeleton-loading rounded w-24"></div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-amber-50 dark:bg-slate-800 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 p-6 transition-all duration-500">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:bg-slate-800 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 p-6 transition-all duration-500 hover:-translate-y-0.5">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-            Exchange Rate Movement
+      <div className="flex flex-col gap-2 mb-3 animate-fade-in-up">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+            <span className="w-2 h-2 bg-blue-500 rounded-full glow-pulse"></span>
+            <span>Exchange Rate Movement</span>
           </h2>
-          <div className="flex items-center gap-2">
-            <span className="text-3xl font-bold text-slate-900 dark:text-white tabular-nums">
-              {filteredData[filteredData.length - 1]?.[selectedCurrency].toFixed(2) || '—'} ETB
-            </span>
-            <span className={`text-sm font-medium px-3 py-1.5 rounded-full ${
-              change.value >= 0 
-                ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
-                : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-            }`}>
-              {change.value >= 0 ? '+' : ''}{change.value.toFixed(2)} ({change.percentage.toFixed(2)}%)
-            </span>
-          </div>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full transition-all duration-300 animate-fade-in-scale whitespace-nowrap ${
+            change.value >= 0 
+              ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
+              : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+          }`}>
+            {change.value >= 0 ? '+' : ''}{change.value.toFixed(2)} ({change.percentage.toFixed(2)}%)
+          </span>
+        </div>
+        <div className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tabular-nums value-transition animate-fade-in-scale">
+          {filteredData[filteredData.length - 1]?.[selectedCurrency].toFixed(2) || '—'} ETB
         </div>
 
-        <div className="flex gap-2 mt-4 md:mt-0">
+        <div className="flex flex-col xs:flex-row gap-2 w-full">
           {/* Currency Selector */}
-          <div className="flex gap-1 bg-slate-100 dark:bg-slate-700/50 rounded-xl p-1.5 ring-1 ring-slate-200/50 dark:ring-slate-600/50">
+          <div className="flex gap-1 bg-slate-100 dark:bg-slate-700/50 rounded-lg p-0.5 ring-1 ring-slate-200/50 dark:ring-slate-600/50">
             {(['USD', 'EUR', 'GBP'] as const).map((currency) => (
               <button
                 key={currency}
                 onClick={() => setSelectedCurrency(currency)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 transform hover:scale-105 ${
                   selectedCurrency === currency
                     ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-600/50'
@@ -121,12 +125,12 @@ export default function ExchangeRateChart() {
           </div>
 
           {/* Time Range Selector */}
-          <div className="flex gap-1 bg-slate-100 dark:bg-slate-700/50 rounded-xl p-1.5 ring-1 ring-slate-200/50 dark:ring-slate-600/50">
+          <div className="flex gap-1 bg-slate-100 dark:bg-slate-700/50 rounded-lg p-0.5 ring-1 ring-slate-200/50 dark:ring-slate-600/50">
             {(['6h', '12h', '24h'] as const).map((range) => (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                className={`px-2 py-1 rounded text-xs font-semibold transition-all duration-300 transform hover:scale-105 ${
                   timeRange === range
                     ? 'bg-white dark:bg-slate-600 text-slate-900 dark:text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-600/50'
@@ -140,7 +144,7 @@ export default function ExchangeRateChart() {
       </div>
 
       {/* Chart */}
-      <div className="h-32">
+      <div className="h-24 sm:h-32">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={filteredData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-700" />
@@ -183,28 +187,28 @@ export default function ExchangeRateChart() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Current</p>
-          <p className="text-lg font-semibold text-gray-900 dark:text-white">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Current</p>
+          <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
             {filteredData[filteredData.length - 1]?.[selectedCurrency].toFixed(2) || '—'}
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">High</p>
-          <p className="text-lg font-semibold text-green-600 dark:text-green-400">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">High</p>
+          <p className="text-sm sm:text-base font-semibold text-green-600 dark:text-green-400">
             {Math.max(...filteredData.map(d => d[selectedCurrency])).toFixed(2)}
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Low</p>
-          <p className="text-lg font-semibold text-red-600 dark:text-red-400">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Low</p>
+          <p className="text-sm sm:text-base font-semibold text-red-600 dark:text-red-400">
             {Math.min(...filteredData.map(d => d[selectedCurrency])).toFixed(2)}
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Data Points</p>
-          <p className="text-lg font-semibold text-gray-900 dark:text-white">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Data Points</p>
+          <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
             {filteredData.length}
           </p>
         </div>

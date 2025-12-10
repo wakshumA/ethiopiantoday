@@ -11,15 +11,15 @@ import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function HomePage() {
   return (
-    <div className="space-y-8 lg:space-y-12">
+    <div className="space-y-6 sm:space-y-8 lg:space-y-12">
       {/* Hero Section with Stats */}
       <div className="animate-fade-in-up">
         <HeroSection />
       </div>
 
       {/* Exchange Rate Chart and Remittance Bonus - Full Width Layout */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 lg:gap-8">
-        <div className="xl:col-span-8 space-y-6 lg:space-y-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6 lg:gap-8">
+        <div className="xl:col-span-8 space-y-2 sm:space-y-3 lg:space-y-4">
           <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <Section title="Live Exchange Rate (Parallel) Trends (24h)">
               <ExchangeRateChart />
@@ -40,14 +40,14 @@ export default function HomePage() {
       </div>
 
       {/* Exchange Rate Reform and Calculator - Improved Spacing */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <Section title="Exchange Rate Reform">
-            <div className="p-6 lg:p-8 bg-gradient-to-br from-cyan-50 via-white to-sky-50/30 dark:from-cyan-900/20 dark:via-slate-800 dark:to-sky-900/10 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 transition-all duration-500 hover:-translate-y-0.5">
-              <p className="text-sm lg:text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+            <div className="p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-cyan-50 via-white to-sky-50/30 dark:from-cyan-900/20 dark:via-slate-800 dark:to-sky-900/10 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 transition-all duration-500 hover:-translate-y-0.5">
+              <p className="text-xs sm:text-sm lg:text-base text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
                 Ethiopia implemented a significant foreign exchange market reform in July 2024, transitioning to a market-based exchange rate system. This reform aims to attract foreign investment, boost exports, and stabilize the economy.
               </p>
-              <p className="text-sm lg:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm lg:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
                 The National Bank of Ethiopia (NBE) now allows commercial banks to set their own exchange rates based on market forces, marking a shift from the previous fixed exchange rate regime. This liberalization is expected to improve foreign currency availability and reduce the parallel market premium.
               </p>
             </div>
