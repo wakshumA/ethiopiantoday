@@ -40,6 +40,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
           strategy="beforeInteractive"
         />
+        <Script
+          id="adsense-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.adsbygoogle = window.adsbygoogle || [];
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>
         <Providers>
