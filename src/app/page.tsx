@@ -1,12 +1,23 @@
+import dynamic from 'next/dynamic'
 import Section from '@/components/Section'
 import ExchangeWidget from '@/components/ExchangeWidget'
 import ExchangeCalculator from '@/components/ExchangeCalculator'
-import ExchangeRateChart from '@/components/ExchangeRateChart'
 import RemittanceBonusWidget from '@/components/RemittanceBonusWidget'
 import TopNews from '@/components/TopNews'
 import AdBanner from '@/components/AdBanner'
 import HeroSection from '@/components/HeroSection'
 import NewsletterSignup from '@/components/NewsletterSignup'
+
+// Lazy load chart component to improve initial page load
+const ExchangeRateChart = dynamic(
+  () => import('@/components/ExchangeRateChart'),
+  { 
+    loading: () => (
+      <div className="h-64 bg-gradient-to-br from-gray-200/50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-700/50 rounded-lg animate-pulse" />
+    ),
+    ssr: true,
+  }
+)
 
 export default function HomePage() {
   return (

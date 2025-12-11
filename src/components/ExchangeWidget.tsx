@@ -10,9 +10,10 @@ const fetcher = async (url: string) => {
 }
 
 export default function ExchangeWidget() {
-  const { data: official, isLoading: loadingOfficial, mutate: refreshOfficial } = useSWR('/api/rates/official', fetcher, { refreshInterval: 60_000 })
-  const { data: parallel, isLoading: loadingParallel, mutate: refreshParallel } = useSWR('/api/rates/parallel', fetcher, { refreshInterval: 60_000 })
-  const { data: nbe, isLoading: loadingNBE, mutate: refreshNBE } = useSWR('/api/rates/nbe', fetcher, { refreshInterval: 60_000 })
+  // Refresh every 5 minutes (300 seconds) instead of 1 minute to reduce API calls and improve performance
+  const { data: official, isLoading: loadingOfficial, mutate: refreshOfficial } = useSWR('/api/rates/official', fetcher, { refreshInterval: 300_000 })
+  const { data: parallel, isLoading: loadingParallel, mutate: refreshParallel } = useSWR('/api/rates/parallel', fetcher, { refreshInterval: 300_000 })
+  const { data: nbe, isLoading: loadingNBE, mutate: refreshNBE } = useSWR('/api/rates/nbe', fetcher, { refreshInterval: 300_000 })
 
   const fmt = (n: number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(n)
   const metaOfficial = (official as any)?._updatedAt
