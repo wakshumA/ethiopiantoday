@@ -19,6 +19,11 @@ const ExchangeRateChart = dynamic(
   }
 )
 
+// Enable Incremental Static Regeneration: page auto-regenerates every 5 minutes
+// This ensures all users (on any machine) get fresh exchange rate data automatically
+// without requiring manual refresh
+export const revalidate = 300  // 5 minutes in seconds
+
 export default function HomePage() {
   return (
     <div className="space-y-6 sm:space-y-8 lg:space-y-12">
