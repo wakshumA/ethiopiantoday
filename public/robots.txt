@@ -1,0 +1,24 @@
+# Robots.txt for Ethiopian Today
+# Allow all search engine bots to crawl the website
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.next/
+Disallow: /node_modules/
+
+# Specific rules for common bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Crawl delay (optional - set to 1 second)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://ethiopiantoday.com/sitemap.xml
