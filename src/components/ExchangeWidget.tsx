@@ -19,7 +19,7 @@ export default function ExchangeWidget() {
   const metaParallel = (parallel as any)?._updatedAt
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:bg-slate-800 transition-all duration-500 hover:-translate-y-0.5">
+    <div className="rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] ring-1 ring-amber-200/30 dark:ring-slate-700/50 bg-gradient-to-br from-white via-amber-50/50 to-orange-50/50 dark:from-slate-800 dark:via-slate-700/70 dark:to-slate-700/50 transition-all duration-500 hover:-translate-y-1">
       {/* Header */}
       <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-br from-blue-500 to-blue-600 text-white dark:from-blue-600 dark:to-blue-700 transition-all duration-300">
         <h3 className="text-base sm:text-lg md:text-xl font-semibold tracking-tight flex items-center gap-2">
@@ -32,7 +32,7 @@ export default function ExchangeWidget() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Official */}
           <div className="transition-all duration-300 hover:scale-105">
-            <h4 className="mb-2 text-xs sm:text-sm font-medium text-[#0A3D62] dark:text-[#5B9BD5] flex items-center gap-2">
+            <h4 className="mb-2 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 flex items-center gap-2">
               <span className="inline-flex w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
               <span>CBE Cash Rates</span>
             </h4>
@@ -47,27 +47,27 @@ export default function ExchangeWidget() {
                 {/* Column Headers */}
                 <div className="grid grid-cols-3 gap-2 pb-2 border-b border-gray-200 dark:border-gray-800">
                   <div className="text-xs font-medium text-gray-500 dark:text-gray-400"></div>
-                  <div className="text-xs font-medium text-[#1BAA64] dark:text-[#28C76F] text-center">Buy</div>
-                  <div className="text-xs font-medium text-[#D9534F] dark:text-[#FF6B6B] text-center">Sell</div>
+                  <div className="text-xs font-medium text-green-700 dark:text-green-400 text-center">Buy</div>
+                  <div className="text-xs font-medium text-red-700 dark:text-red-400 text-center">Sell</div>
                 </div>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-800">
                   {official?.rates?.map((r: any) => (
-                    <li key={r.code} className="py-2 transition-all duration-200 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 rounded px-1 sm:px-2">
+                    <li key={r.code} className="py-2 transition-all duration-200 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 rounded px-1 sm:px-2">
                       {!r.buying && !r.selling ? (
                         <div className="flex items-center justify-between">
-                          <span className={clsx('text-xs sm:text-sm', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
-                          <span className="text-xs sm:text-sm tabular-nums text-[#0A3D62] dark:text-[#5B9BD5] animate-counter-up">{fmt(r.rate)}</span>
+                          <span className={clsx('text-xs sm:text-sm text-slate-900 dark:text-slate-100', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
+                          <span className="text-xs sm:text-sm tabular-nums text-slate-700 dark:text-slate-300 animate-counter-up">{fmt(r.rate)}</span>
                         </div>
                       ) : (
                         <div className="grid grid-cols-3 gap-2 items-center">
-                          <span className={clsx('text-xs sm:text-sm', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
-                          <div className="px-2 py-1 rounded bg-[#E8F5F0] dark:bg-[#1BAA64]/10 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform">
-                            <span className="text-xs font-medium tabular-nums text-[#1BAA64] dark:text-[#28C76F] block animate-counter-up">
+                          <span className={clsx('text-xs sm:text-sm text-slate-900 dark:text-slate-100', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
+                          <div className="px-2 py-1 rounded bg-green-50 dark:bg-green-900/20 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform border border-green-200 dark:border-green-800">
+                            <span className="text-xs font-medium tabular-nums text-green-700 dark:text-green-400 block animate-counter-up">
                               {r.buying ? fmt(r.buying) : '—'}
                             </span>
                           </div>
-                          <div className="px-2 py-1 rounded bg-[#FDECEA] dark:bg-[#D9534F]/10 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform">
-                            <span className="text-xs font-medium tabular-nums text-[#D9534F] dark:text-[#FF6B6B] block animate-counter-up">
+                          <div className="px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform border border-red-200 dark:border-red-800">
+                            <span className="text-xs font-medium tabular-nums text-red-700 dark:text-red-400 block animate-counter-up">
                               {r.selling ? fmt(r.selling) : '—'}
                             </span>
                           </div>
@@ -82,7 +82,7 @@ export default function ExchangeWidget() {
 
           {/* NBE Rates */}
           <div className="transition-all duration-300 hover:scale-105">
-            <h4 className="mb-2 text-xs sm:text-sm font-medium text-[#0A3D62] dark:text-[#5B9BD5] flex items-center gap-2">
+            <h4 className="mb-2 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 flex items-center gap-2">
               <span className="inline-flex w-2 h-2 bg-cyan-500 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }}></span>
               <span>NBE Transfer Rates</span>
             </h4>
@@ -97,27 +97,27 @@ export default function ExchangeWidget() {
                 {/* Column Headers */}
                 <div className="grid grid-cols-3 gap-2 pb-2 border-b border-gray-200 dark:border-gray-800">
                   <div className="text-xs font-medium text-gray-500 dark:text-gray-400"></div>
-                  <div className="text-xs font-medium text-[#1BAA64] dark:text-[#28C76F] text-center">Buy</div>
-                  <div className="text-xs font-medium text-[#D9534F] dark:text-[#FF6B6B] text-center">Sell</div>
+                  <div className="text-xs font-medium text-green-700 dark:text-green-400 text-center">Buy</div>
+                  <div className="text-xs font-medium text-red-700 dark:text-red-400 text-center">Sell</div>
                 </div>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-800">
                   {nbe?.rates?.map((r: any) => (
-                    <li key={r.code} className="py-2 transition-all duration-200 hover:bg-cyan-50/50 dark:hover:bg-cyan-900/10 rounded px-1 sm:px-2">
+                    <li key={r.code} className="py-2 transition-all duration-200 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 rounded px-1 sm:px-2">
                       {!r.buying && !r.selling ? (
                         <div className="flex items-center justify-between">
-                          <span className={clsx('text-xs sm:text-sm', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
-                          <span className="text-xs sm:text-sm tabular-nums text-[#0A3D62] dark:text-[#5B9BD5] animate-counter-up">{fmt(r.rate)}</span>
+                          <span className={clsx('text-xs sm:text-sm text-slate-900 dark:text-slate-100', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
+                          <span className="text-xs sm:text-sm tabular-nums text-slate-700 dark:text-slate-300 animate-counter-up">{fmt(r.rate)}</span>
                         </div>
                       ) : (
                         <div className="grid grid-cols-3 gap-2 items-center">
-                          <span className={clsx('text-xs sm:text-sm', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
-                          <div className="px-2 py-1 rounded bg-[#E8F5F0] dark:bg-[#1BAA64]/10 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform">
-                            <span className="text-xs font-medium tabular-nums text-[#1BAA64] dark:text-[#28C76F] block animate-counter-up">
+                          <span className={clsx('text-xs sm:text-sm text-slate-900 dark:text-slate-100', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
+                          <div className="px-2 py-1 rounded bg-green-50 dark:bg-green-900/20 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform border border-green-200 dark:border-green-800">
+                            <span className="text-xs font-medium tabular-nums text-green-700 dark:text-green-400 block animate-counter-up">
                               {r.buying ? fmt(r.buying) : '—'}
                             </span>
                           </div>
-                          <div className="px-2 py-1 rounded bg-[#FDECEA] dark:bg-[#D9534F]/10 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform">
-                            <span className="text-xs font-medium tabular-nums text-[#D9534F] dark:text-[#FF6B6B] block animate-counter-up">
+                          <div className="px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-center transition-all duration-200 hover:shadow-md hover:scale-110 cursor-pointer transform border border-red-200 dark:border-red-800">
+                            <span className="text-xs font-medium tabular-nums text-red-700 dark:text-red-400 block animate-counter-up">
                               {r.selling ? fmt(r.selling) : '—'}
                             </span>
                           </div>
@@ -132,7 +132,7 @@ export default function ExchangeWidget() {
 
           {/* Parallel */}
           <div className="transition-all duration-300 hover:scale-105">
-            <h4 className="mb-2 text-xs sm:text-sm font-medium text-[#0A3D62] dark:text-[#5B9BD5] flex items-center gap-2">
+            <h4 className="mb-2 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 flex items-center gap-2">
               <span className="inline-flex w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.6s' }}></span>
               <span>Parallel Market</span>
             </h4>
@@ -147,13 +147,13 @@ export default function ExchangeWidget() {
                 {/* Column Header */}
                 <div className="grid grid-cols-2 gap-2 pb-2 border-b border-gray-200 dark:border-gray-800">
                   <div className="text-xs font-medium text-gray-500 dark:text-gray-400"></div>
-                  <div className="text-xs font-medium text-[#1BAA64] dark:text-[#28C76F] text-center">Buy</div>
+                  <div className="text-xs font-medium text-green-700 dark:text-green-400 text-center">Buy</div>
                 </div>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-800">
                   {parallel?.rates?.map((r: any) => (
-                    <li key={r.code} className="grid grid-cols-2 gap-2 items-center py-2 transition-all duration-200 hover:bg-purple-50/50 dark:hover:bg-purple-900/10 rounded px-1 sm:px-2">
-                      <span className={clsx('text-xs sm:text-sm', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
-                      <span className="text-xs sm:text-sm tabular-nums text-[#0A3D62] dark:text-[#5B9BD5] text-center transition-all duration-200 hover:scale-110 inline-block animate-counter-up">{fmt(r.rate)}</span>
+                    <li key={r.code} className="grid grid-cols-2 gap-2 items-center py-2 transition-all duration-200 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 rounded px-1 sm:px-2">
+                      <span className={clsx('text-xs sm:text-sm text-slate-900 dark:text-slate-100', r.code === 'USD' && 'font-semibold')}>{r.code}</span>
+                      <span className="text-xs sm:text-sm tabular-nums text-slate-700 dark:text-slate-300 text-center transition-all duration-200 hover:scale-110 inline-block animate-counter-up">{fmt(r.rate)}</span>
                     </li>
                   ))}
                 </ul>

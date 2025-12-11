@@ -69,10 +69,17 @@ export default function AIGeneratedNews({ rates }: AIGeneratedNewsProps) {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to generate article')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to generate article')
       }
 
       const data = await response.json()
+      
+      // Handle case where article is null (API not configured)
+      if (!data.article) {
+        throw new Error(data.error || 'Failed to generate article')
+      }
+      
       saveArticleToCache(data.article)
       
       if (category === 'exchange-rate') {
@@ -81,7 +88,9 @@ export default function AIGeneratedNews({ rates }: AIGeneratedNewsProps) {
         setEconomyArticle(data.article)
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate article')
+      const errorMsg = err instanceof Error ? err.message : 'Failed to generate article'
+      console.error(`[AIGeneratedNews] ${category} generation failed:`, errorMsg)
+      setError(errorMsg)
     }
   }
 
@@ -127,9 +136,8 @@ export default function AIGeneratedNews({ rates }: AIGeneratedNewsProps) {
     
     const isExchangeRate = article.category === 'exchange-rate'
     const gradientClass = isExchangeRate 
-      ? 'bg-gradient-to-br from-purple-50 via-white to-pink-50/30 dark:from-purple-900/20 dark:via-slate-800 dark:to-pink-900/10'
-      : 'bg-gradient-to-br from-indigo-50 via-white to-blue-50/30 dark:from-indigo-900/20 dark:via-slate-800 dark:to-blue-900/10'
-    
+      ? 'bg-gradient-to-br from-white via-white to-white dark:from-slate-800 dark:via-slate-800 dark:to-slate-800'
+      : 'bg-gradient-to-br from-white via-white to-white dark:from-slate-800 dark:via-slate-800 dark:to-slate-800'
     const borderHoverClass = isExchangeRate
       ? 'hover:border-purple-400 dark:hover:border-purple-500'
       : 'hover:border-indigo-400 dark:hover:border-indigo-500'
@@ -139,7 +147,7 @@ export default function AIGeneratedNews({ rates }: AIGeneratedNewsProps) {
       : 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
     
     return (
-      <div className={`border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden h-full transition-all duration-500 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] hover:-translate-y-1 ${gradientClass} ${borderHoverClass}`}>
+      <div className={`border border-purple-200/40 dark:border-slate-700/50 rounded-xl overflow-hidden h-full transition-all duration-500 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] hover:-translate-y-1 ${gradientClass} ${borderHoverClass}`}>
         <div className="p-6 space-y-4">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1 flex-1">
@@ -155,10 +163,10 @@ export default function AIGeneratedNews({ rates }: AIGeneratedNewsProps) {
           
           <div className={`p-4 rounded-lg border ${
             article.category === 'exchange-rate'
-              ? 'bg-purple-50/50 dark:bg-purple-900/10 border-purple-200/50 dark:border-purple-800/30'
-              : 'bg-indigo-50/50 dark:bg-indigo-900/10 border-indigo-200/50 dark:border-indigo-800/30'
+              ? 'bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600'
+              : 'bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600'
           }`}>
-            <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-2">Summary</p>
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">Summary</p>
             <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{article.summary}</p>
           </div>
           
@@ -175,11 +183,16 @@ export default function AIGeneratedNews({ rates }: AIGeneratedNewsProps) {
   }
 
   return (
-    <div className="space-y-6 p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ring-1 ring-slate-200/60 dark:ring-slate-700/60">
+    <div className="space-y-6 p-6 rounded-2xl bg-gradient-to-br from-white via-purple-50/50 to-pink-50/50 dark:from-slate-800 dark:via-slate-700/70 dark:to-slate-700/50 shadow-[0_4px_20px_rgba(0,0,0,0.06)] ring-1 ring-purple-200/30 dark:ring-slate-700/50">
 
       {error && (
-        <div className="p-4 border border-red-300 dark:border-red-700 rounded-lg bg-red-50 dark:bg-red-950">
-          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        <div className="p-4 border border-amber-300 dark:border-amber-700 rounded-lg bg-amber-50 dark:bg-amber-950">
+          <p className="text-sm font-semibold text-amber-800 dark:text-amber-200 mb-1">⚠️ Economic Insights Unavailable</p>
+          <p className="text-xs text-amber-700 dark:text-amber-300">
+            {error.includes('GROQ_API_KEY') 
+              ? 'AI article generation requires GROQ_API_KEY to be configured. Please add your Groq API key to generate economic insights.'
+              : error}
+          </p>
         </div>
       )}
 

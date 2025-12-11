@@ -120,7 +120,7 @@ export default function TopNews() {
   }
 
   return (
-    <div className="space-y-6 p-4 sm:p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.04)] ring-1 ring-slate-200/60 dark:ring-slate-700/60">
+    <div className="space-y-6 p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white via-amber-50/50 to-orange-50/50 dark:from-slate-800 dark:via-slate-700/70 dark:to-slate-700/50 shadow-[0_4px_20px_rgba(0,0,0,0.06)] ring-1 ring-amber-200/30 dark:ring-slate-700/50">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {news.map((item, index) => (
           <a
@@ -128,7 +128,7 @@ export default function TopNews() {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="stagger-item group bg-white dark:bg-slate-700 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-600 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+            className="stagger-item group bg-gradient-to-br from-white via-blue-50/50 to-indigo-50/50 dark:from-slate-700 dark:via-slate-700/80 dark:to-slate-700/60 rounded-xl overflow-hidden border border-blue-200/40 dark:border-slate-600/50 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
             {item.thumbnail && (

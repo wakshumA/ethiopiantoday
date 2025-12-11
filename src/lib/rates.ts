@@ -204,9 +204,9 @@ export async function fetchOfficialRates(): Promise<Rate[]> {
     console.error('[fetchOfficialRates] Ethioxchange scraping failed:', error)
   }
 
-  // 1) Prefer documented JSON API via env if provided
+  // 1) Try loading from JSON file (env var or default path)
   try {
-    const api = process.env.OFFICIAL_RATES_JSON_URL
+    const api = process.env.OFFICIAL_RATES_JSON_URL || '/official-rates.json'
     console.log('[fetchOfficialRates] Checking OFFICIAL_RATES_JSON_URL:', api)
     if (api) {
       let data: any
@@ -402,6 +402,9 @@ export async function fetchOfficialRates(): Promise<Rate[]> {
     { code: 'USD', rate: 150.93 },
     { code: 'EUR', rate: 159.2 },
     { code: 'GBP', rate: 191.5 },
+    { code: 'AED', rate: 41.09 },
+    { code: 'SAR', rate: 40.4 },
+    { code: 'KWD', rate: 484.6 },
   ]
 }
 
@@ -416,9 +419,9 @@ export async function fetchParallelRates(): Promise<Rate[]> {
   // Cache for 10 minutes
   if (parallelCache && now - parallelCache.ts < 10 * 60 * 1000) return parallelCache.data
 
-  // 1) If an env JSON is provided, use it (kept as an optional override)
+  // 1) If an env JSON is provided or default path, use it
   try {
-    const api = process.env.PARALLEL_RATES_JSON_URL
+    const api = process.env.PARALLEL_RATES_JSON_URL || '/parallel-rates.json'
     console.log('[fetchParallelRates] Checking PARALLEL_RATES_JSON_URL:', api)
     if (api) {
       let data: any
@@ -586,7 +589,7 @@ export async function fetchParallelRates(): Promise<Rate[]> {
     if (usd && usd > 0) {
       const premiumUsd = usd + 20
       const factor = premiumUsd / usd
-      const wanted = ['USD', 'EUR', 'GBP']
+      const wanted = ['USD', 'EUR', 'GBP', 'AED', 'SAR', 'KWD']
       const computed: Rate[] = []
       for (const code of wanted) {
         if (code === 'USD') {

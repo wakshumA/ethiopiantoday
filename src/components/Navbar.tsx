@@ -6,7 +6,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-gradient-to-r from-white via-blue-50 to-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-blue-900/20 dark:to-gray-900 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95 border-blue-200/30 dark:border-blue-800/30 transition-all duration-300">
+    <header className="sticky top-0 z-50 border-b bg-white dark:bg-gray-900 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95 border-gray-200/30 dark:border-gray-700/30 transition-all duration-300">
       <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex items-center justify-between py-4 gap-4">
         <Link className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-cyan-400 hover:scale-105 transition-transform duration-300" href="/">
           Ethiopian Exchange Rate Today
@@ -55,7 +55,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-blue-200/30 dark:border-blue-800/30 bg-gradient-to-br from-white via-blue-50 to-cyan-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-blue-900/10 dark:to-gray-900 animate-slide-in-right">
+        <div className="md:hidden border-t border-gray-200/30 dark:border-gray-700/30 bg-white dark:bg-gray-900 animate-slide-in-right">
           <nav className="container max-w-7xl py-4 flex flex-col space-y-3">
             <Link href="/" className="text-base font-semibold text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors pl-4 py-2 rounded-lg hover:bg-blue-100/50 dark:hover:bg-blue-900/20" onClick={() => setMobileMenuOpen(false)}>
               Home

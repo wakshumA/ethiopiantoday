@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server'
 import Groq from 'groq-sdk'
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-})
+const groq = process.env.GROQ_API_KEY 
+  ? new Groq({
+      apiKey: process.env.GROQ_API_KEY,
+    })
+  : null
 
 type NewsArticle = {
   id: string
@@ -16,6 +18,17 @@ type NewsArticle = {
 
 export async function POST(request: Request) {
   try {
+    // Check if API key is configured
+    if (!groq || !process.env.GROQ_API_KEY) {
+      return NextResponse.json(
+        { 
+          error: 'AI service not configured. Please set GROQ_API_KEY environment variable.',
+          article: null
+        },
+        { status: 503 }
+      )
+    }
+
     const body = await request.json()
     const { rates, topic, category = 'exchange-rate' } = body
 

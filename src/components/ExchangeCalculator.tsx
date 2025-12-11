@@ -42,7 +42,7 @@ export default function ExchangeCalculator() {
   }
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] ring-1 ring-slate-200/60 dark:ring-slate-700/60 bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:bg-slate-800 transition-all duration-500 hover:-translate-y-0.5">
+    <div className="rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] ring-1 ring-teal-200/30 dark:ring-slate-700/50 bg-gradient-to-br from-white via-cyan-50/50 to-teal-50/50 dark:from-slate-800 dark:via-slate-700/70 dark:to-slate-700/50 transition-all duration-500 hover:-translate-y-1">
       {/* Header */}
       <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white dark:from-blue-600 dark:via-blue-700 dark:to-blue-800">
         <h3 className="text-sm sm:text-base font-bold tracking-tight flex items-center gap-2">

@@ -94,7 +94,7 @@ export function AffiliateCard({
   const info = providerInfo[provider]
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6 border border-green-200 dark:border-green-800">
+    <div className="bg-gradient-to-br from-white via-green-50/50 to-emerald-50/50 dark:from-slate-800 dark:via-slate-700/70 dark:to-slate-700/50 rounded-xl p-6 border border-green-200/40 dark:border-slate-700/50 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1">
       <div className="flex items-start gap-4">
         <div className="text-4xl">{info.icon}</div>
         <div className="flex-1">
@@ -106,7 +106,7 @@ export function AffiliateCard({
           </p>
           
           {bonus && (
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-2 mb-3">
+            <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-2 mb-3">
               <p className="text-sm font-semibold text-yellow-800 dark:text-yellow-300">
                 🎁 {bonus}
               </p>
