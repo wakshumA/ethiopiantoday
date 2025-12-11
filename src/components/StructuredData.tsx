@@ -9,7 +9,7 @@ export default function StructuredData() {
         '@id': 'https://ethiopiantoday.com/#website',
         url: 'https://ethiopiantoday.com',
         name: 'Ethiopian Today',
-        description: 'Real-time Ethiopian Birr exchange rates, currency conversion, and economic news',
+        description: 'Live Ethiopian Birr exchange rates - Official CBE rates and Black Market (Parallel) rates with real-time tracking',
         potentialAction: {
           '@type': 'SearchAction',
           target: {
@@ -43,12 +43,12 @@ export default function StructuredData() {
         '@type': 'WebPage',
         '@id': 'https://ethiopiantoday.com/#webpage',
         url: 'https://ethiopiantoday.com',
-        name: 'Ethiopian Today - Live Exchange Rates & Economic News',
+        name: 'Live Ethiopian Exchange Rates - Official & Black Market Rates',
         isPartOf: {
           '@id': 'https://ethiopiantoday.com/#website',
         },
         inLanguage: 'en-US',
-        description: 'Real-time Ethiopian Birr exchange rates, currency conversion, and daily economic news from Ethiopia',
+        description: 'Track real-time Ethiopian Birr exchange rates including CBE official rates and black market (parallel) market rates. Free currency converter and economic news.',
       },
       {
         '@type': 'BreadcrumbList',

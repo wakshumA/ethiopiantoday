@@ -11,12 +11,27 @@ import StructuredData from '@/components/StructuredData'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Ethiopian Today - Live Exchange Rates & Economic News',
-  description: 'Get real-time Ethiopian Birr exchange rates, currency conversion, and daily economic news. Track USD, EUR, GBP, AED, SAR, KWD rates and market analysis.',
-  keywords: ['Ethiopian Birr', 'exchange rates', 'ETB', 'currency', 'USD to ETB', 'economic news', 'Ethiopia'],
+  title: 'Ethiopian Exchange Rates - Live Parallel & Official Rates | Ethiopian Today',
+  description: 'Real-time Ethiopian Birr exchange rates - Official CBE rates & Black Market (Parallel) rates. Compare USD, EUR, GBP to ETB with live charts, currency converter, and economic news.',
+  keywords: ['Ethiopian Birr', 'exchange rates', 'ETB', 'black market exchange rate', 'parallel market rate', 'USD to ETB', 'currency converter', 'CBE official rate', 'Ethiopian economic news', 'birr exchange', 'Ethiopia currency'],
   authors: [{ name: 'Ethiopian Today' }],
   creator: 'Ethiopian Today',
   publisher: 'Ethiopian Today',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://ethiopiantoday.com',
+    title: 'Live Ethiopian Exchange Rates - Official & Black Market Rates',
+    description: 'Track real-time Birr exchange rates, parallel market rates, and economic news. Free currency converter and rate charts.',
+    images: [
+      {
+        url: 'https://ethiopiantoday.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Ethiopian Exchange Rates'
+      }
+    ]
+  },
   formatDetection: {
     email: false,
     telephone: false,

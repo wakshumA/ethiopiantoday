@@ -97,11 +97,16 @@ export function middleware(request: NextRequest) {
   }
 
   // Content Security Policy
+  const isDev = process.env.NODE_ENV === 'development'
+  const scriptSrc = isDev 
+    ? "'self' 'unsafe-inline' 'unsafe-eval'" 
+    : "'self' 'unsafe-inline'" // Remove unsafe-eval in production
+  
   response.headers.set(
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Next.js needs unsafe-eval in dev
+      `script-src ${scriptSrc}`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
       "font-src 'self' data:",
@@ -109,6 +114,22 @@ export function middleware(request: NextRequest) {
       "frame-ancestors 'none'",
     ].join('; ')
   )
+
+  // CORS Headers
+  const allowedOrigins = [
+    'https://ethiopiantoday.com',
+    'http://localhost:3000',
+    'http://localhost:3001',
+  ]
+  
+  const origin = request.headers.get('origin')
+  if (origin && allowedOrigins.includes(origin)) {
+    response.headers.set('Access-Control-Allow-Origin', origin)
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    response.headers.set('Access-Control-Max-Age', '86400')
+    response.headers.set('Access-Control-Allow-Credentials', 'true')
+  }
 
   // API route protection
   if (pathname.startsWith('/api')) {

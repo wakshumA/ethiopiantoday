@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import sanitizeHtml from 'sanitize-html'
 
 interface BlogPost {
   id: string
@@ -139,7 +140,17 @@ export default function BlogPostPage() {
       <div 
         className="prose prose-slate dark:prose-invert max-w-none mb-12 animate-fade-in-up"
         style={{ animationDelay: '0.2s' }}
-        dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
+        dangerouslySetInnerHTML={{ 
+          __html: sanitizeHtml(post.content.replace(/\n/g, '<br />'), {
+            allowedTags: ['b', 'i', 'em', 'strong', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+            allowedAttributes: {
+              'a': ['href', 'title', 'rel'],
+              'img': ['src', 'alt', 'title']
+            },
+            allowedSchemes: ['http', 'https', 'mailto'],
+            disallowedTagsMode: 'discard'
+          })
+        }}
       />
 
       {/* Tags */}

@@ -26,7 +26,7 @@ export const revalidate = 300  // 5 minutes in seconds
 
 export default function HomePage() {
   return (
-    <div className="space-y-6 sm:space-y-8 lg:space-y-12">
+    <div className="space-y-2 sm:space-y-3 lg:space-y-4">
       {/* Hero Section with Stats */}
       <div className="animate-fade-in-up">
         <HeroSection />
@@ -36,20 +36,27 @@ export default function HomePage() {
       <div className="p-4 sm:p-6 rounded-3xl bg-gradient-to-br from-white via-amber-50/40 to-teal-50/40 dark:from-slate-800 dark:via-slate-700/70 dark:to-slate-700/50 shadow-[0_4px_20px_rgba(0,0,0,0.06)] ring-1 ring-amber-200/20 dark:ring-slate-700/50">
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-6 lg:gap-8">
           <div className="xl:col-span-8 space-y-2 sm:space-y-3 lg:space-y-4">
-            {/* Chart & Exchange Rates - Sub-container for visual connection */}
-            <div className="p-4 sm:p-5 lg:p-6 rounded-2xl bg-gradient-to-br from-white via-cyan-50/30 to-teal-50/30 dark:from-slate-800/50 dark:via-slate-700/40 dark:to-slate-700/30 border border-cyan-200/20 dark:border-slate-700/30 shadow-sm">
-              <div className="space-y-3 sm:space-y-4">
-                <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                  <Section title="Live Exchange Rate (Parallel) Trends (24h)">
+            {/* Chart & Exchange Rates - Connected with visual link */}
+            <div className="space-y-3 sm:space-y-4">
+              <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                <Section title="Live Exchange Rate Black Market (Parallel) Trends (24h)">
+                  <div className="p-4 sm:p-5 lg:p-6 rounded-t-2xl rounded-b-none bg-gradient-to-br from-white via-cyan-50/30 to-teal-50/30 dark:from-slate-800/50 dark:via-slate-700/40 dark:to-slate-700/30 border border-b-0 border-cyan-200/20 dark:border-slate-700/30 shadow-sm">
                     <ExchangeRateChart />
-                  </Section>
-                </div>
-                
-                <div id="rates" className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  <Section title="Ethiopian Exchange Rates">
+                  </div>
+                </Section>
+              </div>
+              
+              <div id="rates" className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <Section title="">
+                  <div className="p-4 sm:p-5 lg:p-6 rounded-b-2xl rounded-t-none bg-gradient-to-br from-white via-cyan-50/30 to-teal-50/30 dark:from-slate-800/50 dark:via-slate-700/40 dark:to-slate-700/30 border border-t-2 border-cyan-300 dark:border-cyan-600 shadow-sm">
+                    <div className="mb-3">
+                      <h3 className="text-sm font-semibold text-cyan-700 dark:text-cyan-400 flex items-center gap-2">
+                        <span>📊</span> Official & Parallel Exchange Rates
+                      </h3>
+                    </div>
                     <ExchangeWidget />
-                  </Section>
-                </div>
+                  </div>
+                </Section>
               </div>
             </div>
           </div>
@@ -87,7 +94,7 @@ export default function HomePage() {
 
       {/* Top Ethiopian News - Full Width */}
       <div id="top-news" className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-        <Section title="Latest News">
+        <Section title="Latest African News">
           <TopNews />
         </Section>
       </div>

@@ -27,7 +27,9 @@ async function fetchRSS(url: string, source: string): Promise<NewsItem[]> {
   let feed: any
   try {
     feed = await parser.parseURL(url)
+    console.log(`[RSS] Successfully fetched from ${source}: ${feed.items?.length || 0} items`)
   } catch (e) {
+    console.error(`[RSS] Failed to fetch from ${source}:`, e instanceof Error ? e.message : String(e))
     return []
   }
   const items: NewsItem[] = []
@@ -91,10 +93,14 @@ export async function GET(req: Request) {
 
     console.log('[News API] Fetching fresh RSS feeds')
     const feeds = [
-      { url: 'https://www.ena.et/en/?feed=rss2', source: 'ENA' },
-      { url: 'https://addisstandard.com/feed/', source: 'Addis Standard' },
-      { url: 'https://www.thereporterethiopia.com/rss.xml', source: 'The Reporter' },
-      { url: 'https://www.bbc.com/news/world/africa/rss.xml', source: 'BBC Africa' },
+      // Ethiopian news sources (priority)
+      { url: 'https://www.bbc.com/news/world/africa?format=feeds_rss_v2', source: 'BBC Africa' },
+      { url: 'https://feeds.bloomberg.com/markets/news.rss', source: 'Bloomberg Markets' },
+      { url: 'https://feeds.aljazeera.com/aljazeera/channel/africa.xml', source: 'Al Jazeera Africa' },
+      { url: 'https://www.reuters.com/finance', source: 'Reuters' },
+      // Fallback: Generic Africa/World news
+      { url: 'https://www.cnbc.com/id/100003114/device/rss/rss.html', source: 'CNBC Africa' },
+      { url: 'https://feeds.france24.com/en/africa', source: 'France 24' },
     ]
 
   const results = await Promise.allSettled(feeds.map(f => fetchRSS(f.url, f.source)))

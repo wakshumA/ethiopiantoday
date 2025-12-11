@@ -94,14 +94,40 @@ export default function RemittanceBonusWidget() {
           <div className="pt-2 sm:pt-3 border-t border-gray-200 dark:border-gray-800">
             <p className="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Available through:</p>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {['EthioDirect', 'CashGo', 'FastPay', 'Western Union'].map((partner) => (
-                <span
-                  key={partner}
-                  className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                >
-                  {partner}
-                </span>
-              ))}
+              <a
+                href="https://apps.apple.com/us/app/ethiodirect/id1602064491"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors border border-blue-200 dark:border-blue-700/50"
+              >
+                🍎 EthioDirect
+              </a>
+              <a
+                href="https://apps.apple.com/us/app/cashgo/id1559346306"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors border border-blue-200 dark:border-blue-700/50"
+              >
+                🍎 CashGo
+              </a>
+              <span
+                className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+              >
+                FastPay
+              </span>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.westernunion.android.mtapp&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/60 transition-colors border border-blue-200 dark:border-blue-700/50"
+              >
+                🤖 Western Union
+              </a>
+              <span
+                className="text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+              >
+                WegenSend
+              </span>
             </div>
           </div>
 

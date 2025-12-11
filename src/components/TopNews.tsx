@@ -74,6 +74,21 @@ export default function TopNews() {
     return text.substring(0, maxLength).trim() + '...';
   };
 
+  // Array of different African-themed images for news cards
+  const africanNewsImages = [
+    'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500&h=300&fit=crop&q=80', // African continent
+    'https://images.unsplash.com/photo-1488978108395-5f6fb56ad0c5?w=500&h=300&fit=crop&q=80', // African landscape
+    'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500&h=300&fit=crop&q=80', // African people
+    'https://images.unsplash.com/photo-1489749798305-4fea3ba63d60?w=500&h=300&fit=crop&q=80', // African city
+    'https://images.unsplash.com/photo-1489493072403-a1e71c91f91d?w=500&h=300&fit=crop&q=80', // African culture
+    'https://images.unsplash.com/photo-1535905557558-afc4877a26fc?w=500&h=300&fit=crop&q=80', // African nature
+  ];
+
+  // Get image based on index to rotate through different images
+  const getNewsImage = (index: number) => {
+    return africanNewsImages[index % africanNewsImages.length];
+  };
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -131,22 +146,18 @@ export default function TopNews() {
             className="stagger-item group bg-gradient-to-br from-white via-blue-50/50 to-indigo-50/50 dark:from-slate-700 dark:via-slate-700/80 dark:to-slate-700/60 rounded-xl overflow-hidden border border-blue-200/40 dark:border-slate-600/50 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
-            {item.thumbnail && (
-              <div className="relative w-full h-40 sm:h-48 bg-gray-200 dark:bg-gray-800 overflow-hidden">
-                <img 
-                  src={item.thumbnail} 
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute top-2 right-2 px-2 py-1 bg-white/90 dark:bg-gray-900/90 rounded-md text-xs font-medium">
-                  {item.source}
-                </div>
+            {/* Different African images - rotated through 6 variations */}
+            <div className="relative w-full h-40 sm:h-48 bg-gray-200 dark:bg-gray-800 overflow-hidden">
+              <img 
+                src={getNewsImage(index)} 
+                alt="BBC Africa - African News"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+              <div className="absolute top-2 right-2 px-2 py-1 bg-white/90 dark:bg-gray-900/90 rounded-md text-xs font-medium">
+                {item.source}
               </div>
-            )}
+            </div>
             <div className="p-4 sm:p-6 space-y-3">
               <h3 className="font-semibold text-base sm:text-lg text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                 {item.title}
@@ -159,7 +170,7 @@ export default function TopNews() {
               )}
               
               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-500 pt-3 border-t border-gray-100 dark:border-gray-800">
-                {!item.thumbnail && <span className="font-medium text-xs">{item.source}</span>}
+                <span className="font-medium text-xs">{item.source}</span>
                 <span className="flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

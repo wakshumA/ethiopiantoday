@@ -144,7 +144,7 @@ export default function ExchangeRateChart() {
       </div>
 
       {/* Chart */}
-      <div className="h-24 sm:h-32">
+      <div className="h-18 sm:h-24">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={filteredData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-700" />
