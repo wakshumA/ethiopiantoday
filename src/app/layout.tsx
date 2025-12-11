@@ -61,23 +61,6 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://ethiopiantoday.com',
-    siteName: 'Ethiopian Today',
-    title: 'Ethiopian Today - Live Exchange Rates & Economic News',
-    description: 'Real-time Ethiopian Birr exchange rates, currency conversion, and daily economic news from Ethiopia.',
-    images: [
-      {
-        url: 'https://ethiopiantoday.com/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Ethiopian Today - Exchange Rates Platform',
-        type: 'image/png',
-      },
-    ],
-  },
   twitter: {
     card: 'summary_large_image',
     title: 'Ethiopian Today - Live Exchange Rates & Economic News',
