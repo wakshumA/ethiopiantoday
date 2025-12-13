@@ -93,6 +93,15 @@ export default function ExchangeWidget() {
                   <div key={i} className="h-6 bg-gray-200/70 dark:bg-gray-700/50 rounded" />
                 ))}
               </div>
+            ) : nbe?.error || !nbe?.rates || nbe.rates.length === 0 ? (
+              <div className="p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
+                <p className="text-xs text-yellow-800 dark:text-yellow-200">
+                  {nbe?.source === 'error' ? 'NBE data temporarily unavailable' : 'NBE rates not yet loaded'}
+                </p>
+                {nbe?.cached && (
+                  <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">Using cached rates</p>
+                )}
+              </div>
             ) : (
               <div>
                 {/* Column Headers */}
@@ -127,6 +136,9 @@ export default function ExchangeWidget() {
                     </li>
                   ))}
                 </ul>
+                {nbe?.cached && (
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Cached • {nbe.source}</p>
+                )}
               </div>
             )}
           </div>
