@@ -30,10 +30,20 @@ interface BlogPost {
 
 // Helper to get base URL
 function getBaseUrl(): string {
+  // On Azure, use localhost:3000 which works within the container
+  if (process.env.WEBSITE_INSTANCE_ID) {
+    console.log('[getBaseUrl] Running on Azure App Service');
+    return 'http://localhost:3000';
+  }
+  
+  // Check for explicit base URL
   if (process.env.NEXT_PUBLIC_BASE_URL) {
+    console.log('[getBaseUrl] Using NEXT_PUBLIC_BASE_URL:', process.env.NEXT_PUBLIC_BASE_URL);
     return process.env.NEXT_PUBLIC_BASE_URL;
   }
+  
   // Fallback for development
+  console.log('[getBaseUrl] Using localhost fallback');
   return 'http://localhost:3000';
 }
 
@@ -41,52 +51,108 @@ function getBaseUrl(): string {
 async function fetchNBEData() {
   try {
     const baseUrl = getBaseUrl();
-    const response = await fetch(`${baseUrl}/api/rates/nbe`);
+    const url = `${baseUrl}/api/rates/nbe`;
+    console.log('[fetchNBEData] Fetching from:', url);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    const response = await fetch(url, { 
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
     const data = await response.json();
-    console.log('[fetchNBEData] Success');
+    console.log('[fetchNBEData] Success, got', data?.rates?.length, 'rates');
     return data;
   } catch (error) {
     console.error('[fetchNBEData] Error:', error instanceof Error ? error.message : error);
-    return null;
+    return { rates: [] };
   }
 }
 
 async function fetchParallelMarketData() {
   try {
     const baseUrl = getBaseUrl();
-    const response = await fetch(`${baseUrl}/api/rates/parallel`);
+    const url = `${baseUrl}/api/rates/parallel`;
+    console.log('[fetchParallelMarketData] Fetching from:', url);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    const response = await fetch(url, { 
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
     const data = await response.json();
-    console.log('[fetchParallelMarketData] Success');
+    console.log('[fetchParallelMarketData] Success, got', data?.rates?.length, 'rates');
     return data;
   } catch (error) {
     console.error('[fetchParallelMarketData] Error:', error instanceof Error ? error.message : error);
-    return null;
+    return { rates: [] };
   }
 }
 
 async function fetchTopNews() {
   try {
     const baseUrl = getBaseUrl();
-    const response = await fetch(`${baseUrl}/api/news/top`);
+    const url = `${baseUrl}/api/news/top`;
+    console.log('[fetchTopNews] Fetching from:', url);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    const response = await fetch(url, { 
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
     const data = await response.json();
-    console.log('[fetchTopNews] Success');
+    console.log('[fetchTopNews] Success, got', data?.items?.length, 'items');
     return data;
   } catch (error) {
     console.error('[fetchTopNews] Error:', error instanceof Error ? error.message : error);
-    return null;
+    return { items: [] };
   }
 }
 
 async function fetchHistoricalData() {
   try {
     const baseUrl = getBaseUrl();
-    const response = await fetch(`${baseUrl}/api/rates/historical`);
+    const url = `${baseUrl}/api/rates/historical`;
+    console.log('[fetchHistoricalData] Fetching from:', url);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    const response = await fetch(url, { 
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
     const data = await response.json();
-    console.log('[fetchHistoricalData] Success');
+    console.log('[fetchHistoricalData] Success, got', data?.data?.length, 'data points');
     return data;
   } catch (error) {
     console.error('[fetchHistoricalData] Error:', error instanceof Error ? error.message : error);
-    return null;
+    return { data: [] };
   }
 }
 
@@ -142,6 +208,7 @@ Format your response as JSON:
   "tags": ["tag1", "tag2", "tag3"]
 }`;
 
+    console.log('[generateBlogPost] Calling Groq API...');
     const groq = getGroqClient();
     const completion = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
@@ -150,8 +217,14 @@ Format your response as JSON:
       max_tokens: 4000,
     });
 
+    console.log('[generateBlogPost] Groq response received');
     const responseText = completion.choices[0]?.message?.content || '';
     
+    if (!responseText) {
+      throw new Error('Empty response from Groq API');
+    }
+    
+    console.log('[generateBlogPost] Parsing response...');
     // Extract JSON from response (handle markdown code blocks)
     let jsonText = responseText.trim();
     if (jsonText.startsWith('```json')) {
@@ -168,6 +241,7 @@ Format your response as JSON:
       .replace(/\t/g, '\\t'); // Escape tabs
 
     const aiResponse = JSON.parse(jsonText);
+    console.log('[generateBlogPost] JSON parsed successfully');
 
     // Create blog post object
     const blogPost: BlogPost = {
@@ -183,9 +257,17 @@ Format your response as JSON:
       featured: false,
     };
 
+    console.log('[generateBlogPost] Blog post created:', blogPost.id);
     return blogPost;
   } catch (error) {
-    console.error('Error generating blog post:', error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('[generateBlogPost] Error:', errorMsg);
+    console.error('[generateBlogPost] Context:', {
+      nbeData: context?.nbeData ? 'present' : 'missing',
+      parallelData: context?.parallelData ? 'present' : 'missing',
+      topNews: context?.topNews ? 'present' : 'missing',
+      historicalData: context?.historicalData ? 'present' : 'missing',
+    });
     return null;
   }
 }
