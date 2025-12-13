@@ -9,13 +9,19 @@ export async function GET() {
     
     console.log('[NBE API] Fetching rates from:', url)
     
+    // Create abort controller for timeout
+    const abortController = new AbortController()
+    const timeoutId = setTimeout(() => abortController.abort(), 10000)
+    
     const response = await fetch(url, {
       cache: 'no-store',
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; EthiopianTodayBot/1.0)'
       },
-      timeout: 10000
+      signal: abortController.signal
     })
+    
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       console.error(`[NBE API] Status ${response.status}:`, response.statusText)

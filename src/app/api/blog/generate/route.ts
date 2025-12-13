@@ -5,9 +5,15 @@ import path from 'path';
 import { validateBearerToken, validateRequestBody, BlogPostInputSchema } from '@/lib/security';
 import { securityLogger } from '@/lib/security-logger';
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+// Initialize Groq only when needed (not at module load)
+function getGroqClient() {
+  if (!process.env.GROQ_API_KEY) {
+    throw new Error('GROQ_API_KEY environment variable is not set');
+  }
+  return new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+  });
+}
 
 interface BlogPost {
   id: string;
@@ -115,6 +121,7 @@ Format your response as JSON:
   "tags": ["tag1", "tag2", "tag3"]
 }`;
 
+    const groq = getGroqClient();
     const completion = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
       model: 'llama-3.3-70b-versatile',
