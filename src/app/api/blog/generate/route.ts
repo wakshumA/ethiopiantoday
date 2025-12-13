@@ -28,43 +28,64 @@ interface BlogPost {
   featured: boolean;
 }
 
+// Helper to get base URL
+function getBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL;
+  }
+  // Fallback for development
+  return 'http://localhost:3000';
+}
+
 // Fetch data from various sources
 async function fetchNBEData() {
   try {
-    const response = await fetch('http://localhost:3000/api/rates/nbe');
-    return await response.json();
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}/api/rates/nbe`);
+    const data = await response.json();
+    console.log('[fetchNBEData] Success');
+    return data;
   } catch (error) {
-    console.error('Error fetching NBE data:', error);
+    console.error('[fetchNBEData] Error:', error instanceof Error ? error.message : error);
     return null;
   }
 }
 
 async function fetchParallelMarketData() {
   try {
-    const response = await fetch('http://localhost:3000/api/rates/parallel');
-    return await response.json();
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}/api/rates/parallel`);
+    const data = await response.json();
+    console.log('[fetchParallelMarketData] Success');
+    return data;
   } catch (error) {
-    console.error('Error fetching parallel market data:', error);
+    console.error('[fetchParallelMarketData] Error:', error instanceof Error ? error.message : error);
     return null;
   }
 }
 
 async function fetchTopNews() {
   try {
-    const response = await fetch('http://localhost:3000/api/news/top');
-    return await response.json();
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}/api/news/top`);
+    const data = await response.json();
+    console.log('[fetchTopNews] Success');
+    return data;
   } catch (error) {
-    console.error('Error fetching news:', error);
+    console.error('[fetchTopNews] Error:', error instanceof Error ? error.message : error);
     return null;
   }
 }
 
 async function fetchHistoricalData() {
   try {
-    const response = await fetch('http://localhost:3000/api/rates/historical');
-    return await response.json();
+    const baseUrl = getBaseUrl();
+    const response = await fetch(`${baseUrl}/api/rates/historical`);
+    const data = await response.json();
+    console.log('[fetchHistoricalData] Success');
+    return data;
   } catch (error) {
-    console.error('Error fetching historical data:', error);
+    console.error('[fetchHistoricalData] Error:', error instanceof Error ? error.message : error);
     return null;
   }
 }
@@ -222,12 +243,15 @@ export async function POST(request: NextRequest) {
     const preferredCategory = validation.data.category;
 
     // Fetch all data sources
+    console.log('[Blog Generate] Fetching data sources...');
     const [nbeData, parallelData, topNews, historicalData] = await Promise.all([
       fetchNBEData(),
       fetchParallelMarketData(),
       fetchTopNews(),
       fetchHistoricalData(),
     ]);
+
+    console.log('[Blog Generate] Data fetched. NBE:', nbeData?.rates?.length, 'Parallel:', parallelData?.rates?.length, 'News:', topNews?.items?.length);
 
     const context = {
       nbeData,
@@ -237,27 +261,35 @@ export async function POST(request: NextRequest) {
     };
 
     // Generate blog post
+    console.log('[Blog Generate] Generating blog post...');
     const blogPost = await generateBlogPost(context, preferredCategory);
 
     if (!blogPost) {
+      console.error('[Blog Generate] Failed to generate blog post - blogPost is null');
       return NextResponse.json(
         { error: 'Failed to generate blog post' },
         { status: 500 }
       );
     }
 
+    console.log('[Blog Generate] Blog post generated. Saving to file...');
     // Save to file
     saveBlogPost(blogPost);
 
+    console.log('[Blog Generate] Blog post saved successfully:', blogPost.id);
     return NextResponse.json({
       success: true,
       message: 'Blog post generated successfully',
       post: blogPost,
     });
   } catch (error) {
-    console.error('Error in blog generation:', error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('[Blog Generate] Error in blog generation:', errorMsg);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? errorMsg : undefined
+      },
       { status: 500 }
     );
   }

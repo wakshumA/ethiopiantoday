@@ -53,29 +53,46 @@ export async function POST(request: NextRequest) {
     const expectedToken = process.env.BLOG_GENERATION_SECRET || 'your_secret_token';
     
     if (authHeader !== `Bearer ${expectedToken}`) {
+      console.log('[Auto-Generate] Unauthorized access attempt');
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    // Get the base URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    // Get the base URL - try multiple sources for Azure compatibility
+    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    
+    if (!baseUrl) {
+      // Fallback: use request header to construct URL
+      const protocol = request.headers.get('x-forwarded-proto') || 'https';
+      const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost:3000';
+      baseUrl = `${protocol}://${host}`;
+    }
 
-    // Call the blog generation endpoint
+    console.log('[Auto-Generate] Calling blog generation endpoint at:', `${baseUrl}/api/blog/generate`);
+
+    // Call the blog generation endpoint with empty body
     const response = await fetch(`${baseUrl}/api/blog/generate`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${expectedToken}`,
         'Content-Type': 'application/json',
+        'User-Agent': 'Ethiopian-Today-AutoGenerate/1.0',
       },
+      body: JSON.stringify({}), // Empty body with valid JSON
     });
 
+    console.log('[Auto-Generate] Blog generation response status:', response.status);
+
     if (!response.ok) {
-      throw new Error(`Blog generation failed: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('[Auto-Generate] Blog generation failed:', response.statusText, errorText);
+      throw new Error(`Blog generation failed: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
+    console.log('[Auto-Generate] Blog post generated successfully');
 
     return NextResponse.json({
       success: true,
@@ -84,7 +101,7 @@ export async function POST(request: NextRequest) {
       data,
     });
   } catch (error) {
-    console.error('Error in automated blog generation:', error);
+    console.error('[Auto-Generate] Error in automated blog generation:', error instanceof Error ? error.message : error);
     return NextResponse.json(
       { 
         error: 'Failed to generate blog post automatically',
