@@ -1,0 +1,27 @@
+name: Post Exchange Rates to Twitter
+
+on:
+  schedule:
+    # Run every day at 8 AM UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  post-rates:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Post exchange rates to Twitter
+        run: |
+          curl -X POST https://thioexchangerate.azurewebsites.net/api/twitter/post-rates \
+            -H "Authorization: Bearer ${{ secrets.TWITTER_BOT_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+      
+      - name: ✅ Exchange rates posted successfully
+        if: success()
+        run: echo "Twitter post completed successfully!"
+      
+      - name: ❌ Failed to post exchange rates
+        if: failure()
+        run: echo "Failed to post exchange rates to Twitter"
