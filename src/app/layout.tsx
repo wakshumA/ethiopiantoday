@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     canonical: 'https://ethiopiantoday.com',
   },
   verification: {
-    google: 's59-lyvKbY2m9NOOzlPWdZIh0sSXCLjkC1NOrIr69gU',
+    google: 'ijpd3aQPcwAREnM3fjQKc1LcqjsMiylF2-sGGuFymCE',
   },
   other: {
     'google-adsense-account': 'ca-pub-9561015604678968',
