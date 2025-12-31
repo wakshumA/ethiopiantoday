@@ -27,9 +27,15 @@ jobs:
         run: |
           npm ci
           npm run build --if-present
+      
+      - name: Create startup script
+        run: |
+          echo '#!/bin/sh' > startup.sh
+          echo 'npm start' >> startup.sh
+          chmod +x startup.sh
         
       - name: Zip artifact for deployment
-        run: zip -r release.zip .next node_modules public package.json next.config.mjs
+        run: zip -r release.zip .next node_modules public package.json next.config.mjs startup.sh
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -59,10 +65,6 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_21C4A953582F46FA892B12CA0DCC93C3 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_91E77DC79713475B92ED66069D9C4D12 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_92C07AB0F5C747F9815F0ABD160D9711 }}
-
-      - name: Configure Azure App Settings
-        run: |
-          az webapp config appsettings set --name thioexchangerate --resource-group DefaultResourceGroup-CC --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false WEBSITE_RUN_FROM_PACKAGE=0
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
