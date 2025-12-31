@@ -35,7 +35,7 @@ jobs:
           chmod +x startup.sh
         
       - name: Zip artifact for deployment
-        run: zip -r release.zip .next node_modules public package.json next.config.mjs startup.sh
+        run: zip -r release.zip .next node_modules public src package.json next.config.mjs startup.sh tsconfig.json next-env.d.ts tailwind.config.ts postcss.config.js
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
