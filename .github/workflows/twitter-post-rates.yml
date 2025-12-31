@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Post exchange rates to Twitter
         run: |
-          curl -X POST https://thioexchangerate.azurewebsites.net/api/twitter/post-rates \
+          curl -X POST https://ethiopiantoday.com/api/twitter/post-rates \
             -H "Authorization: Bearer ${{ secrets.TWITTER_BOT_SECRET }}" \
             -H "Content-Type: application/json" \
             -d '{}'
