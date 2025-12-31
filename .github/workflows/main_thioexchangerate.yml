@@ -23,6 +23,11 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: npm install and build
+        run: |
+          npm ci
+          npm run build --if-present
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -49,6 +54,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_91E77DC79713475B92ED66069D9C4D12 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_92C07AB0F5C747F9815F0ABD160D9711 }}
 
+      - name: Stop Azure Web App
+        run: |
+          az webapp stop --name thioexchangerate --resource-group DefaultResourceGroup-CC
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -57,5 +66,8 @@ jobs:
           slot-name: 'Production'
           package: .
           clean: true
-          restart: true
+
+      - name: Start Azure Web App
+        run: |
+          az webapp start --name thioexchangerate --resource-group DefaultResourceGroup-CC
           
