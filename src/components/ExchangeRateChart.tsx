@@ -170,7 +170,7 @@ export default function ExchangeRateChart() {
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
               }}
               labelFormatter={(timestamp) => format(new Date(timestamp as number), 'MMM d, HH:mm')}
-              formatter={(value: number) => [`${value.toFixed(2)} ETB`, selectedCurrency]}
+              formatter={(value?: number) => value ? [`${value.toFixed(2)} ETB`, selectedCurrency] : ['N/A', selectedCurrency]}
             />
             <Legend />
             <Line
