@@ -60,6 +60,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_91E77DC79713475B92ED66069D9C4D12 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_92C07AB0F5C747F9815F0ABD160D9711 }}
 
+      - name: Configure Azure App Settings
+        run: |
+          az webapp config appsettings set --name thioexchangerate --resource-group DefaultResourceGroup-CC --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false WEBSITE_RUN_FROM_PACKAGE=0
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -67,7 +71,4 @@ jobs:
           app-name: 'thioexchangerate'
           slot-name: 'Production'
           package: release.zip
-        env:
-          SCM_DO_BUILD_DURING_DEPLOYMENT: false
-          ENABLE_ORYX_BUILD: false
           
