@@ -56,4 +56,6 @@ jobs:
           app-name: 'thioexchangerate'
           slot-name: 'Production'
           package: .
+          clean: true
+          restart: true
           
